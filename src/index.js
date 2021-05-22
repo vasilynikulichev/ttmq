@@ -1,3 +1,11 @@
 import './styles/main.scss';
+import charactersApi from './api/Characters';
 
-console.log('start');
+
+const request = async () => {
+    const result = await charactersApi.getAllCharacters();
+
+    console.log(result);
+};
+
+request();
