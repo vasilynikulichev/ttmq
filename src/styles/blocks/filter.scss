@@ -1,0 +1,23 @@
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__appearance {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    &__status {
+        margin-right: 10px;
+    }
+
+    &__btn-search {
+        width: 200px;
+        text-align: center;
+        background-color: #edbd37;
+        border-radius: 5px;
+        padding: 10px 15px;
+        height: auto;
+        align-self: flex-end;
+    }
+}

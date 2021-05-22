@@ -1,1 +1,10 @@
 @import 'common/normalize.css';
+@import 'common/base.scss';
+
+@import 'components/select';
+
+@import 'blocks/appearance';
+@import 'blocks/characters';
+@import 'blocks/filter';
+@import 'blocks/management';
+@import 'blocks/status';

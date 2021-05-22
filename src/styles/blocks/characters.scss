@@ -1,0 +1,47 @@
+.characters {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -1%;
+
+    &__item {
+        width: 19%;
+        margin-right: 1%;
+        margin-bottom: 20px;
+    }
+}
+
+.character {
+    border: 1px solid #e7e7e7;
+
+    &__name {
+        padding: 7px 10px;
+        font-size: 16px;
+    }
+
+    &__img {
+        overflow: hidden;
+        height: 200px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    &__info {
+        padding: 10px 10px;
+    }
+
+    &__info-item {
+        display: flex;
+        font-size: 16px;
+        margin-bottom: 7px;
+
+        span:first-child {
+            width: 40%;
+            font-weight: bold;
+        }
+
+        span:last-child {
+            width: 60%;
+        }
+    }
+}

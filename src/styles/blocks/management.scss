@@ -1,0 +1,25 @@
+.management {
+    background-color: #4a76b8;
+
+    & .container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 15px;
+    }
+
+    &__title {
+        font-size: 22px;
+        width: 100%;
+        color: #fff;
+        margin-top: 0;
+    }
+
+    &__graph {
+        width: 40%;
+    }
+
+    &__filter {
+        width: 60%;
+    }
+}

@@ -1,0 +1,39 @@
+.appearance {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__title {
+        width: 100%;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    &__item {
+        input {
+            display: none;
+
+            &:checked + span {
+                background-color: rgba(255, 255, 255, 1);
+            }
+        }
+
+        span {
+            display: block;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.65);
+            }
+        }
+
+        &:last-child {
+            span {
+                margin-right: 0;
+            }
+        }
+    }
+}
