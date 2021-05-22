@@ -5,6 +5,26 @@
     <title>ttmq</title>
 </head>
 <body>
-    <div id="app">123</div>
+    <main class="container">
+        <section class="management">
+            <h1 class="management__tilte">Title</h1>
+            <div class="management__graph"></div>
+            <section class="management__filter filter">
+                <div class="filter__row"></div>
+                <div class="filter__row">
+                    <div class="filter__status">
+                        <div>Status</div>
+                        <select class="select">
+                            <option class="select__option" value="Alive">Alive</option>
+                            <option class="select__option" value="Deceased">Deceased</option>
+                            <option class="select__option" value="Presumed dead">Presumed dead</option>
+                        </select>
+                    </div>
+                    <button type="button">search</button>
+                </div>
+            </section>
+        </section>
+
+    </main>
 </body>
 </html>
