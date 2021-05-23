@@ -1,11 +1,11 @@
 import {baseUrl} from '../constants';
-import Request from '../utils/Request';
+import request from '../utils/request';
 
-class CharactersApi extends Request {
+class CharactersApi {
     entryPoint = `${baseUrl}/characters`;
 
     getAllCharacters() {
-        return this.request(this.entryPoint);
+        return request(this.entryPoint);
     }
 }
 

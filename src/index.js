@@ -1,5 +1,5 @@
 import './styles/main.scss';
-import App from './app/App';
+import App from './js/App';
 import charactersApi from './api/Characters';
 
 (async () => {

@@ -1,13 +1,13 @@
-import DOMHelpers from '../utils/createNode';
+import createNode from '../utils/createNode';
+import Select from './components/Select';
 
-export default class App extends DOMHelpers {
+export default class App {
     characters = [];
     statuses = [];
     appearances = [];
     quantityPeoplePerSeason = {};
 
     constructor(data, appearanceRootNode, statusRootNode, charactersRootNode) {
-        super();
         this.characters = data;
         this.appearanceRootNode = appearanceRootNode;
         this.statusRootNode = statusRootNode;
@@ -42,10 +42,11 @@ export default class App extends DOMHelpers {
         this.getData();
         this.renderAppearance();
         this.renderCharacters();
+        this.renderSelect();
     }
 
     createNodeAppearance(number) {
-        return this.getHtmlNode({
+        return createNode({
             tag: 'label',
             attributes: {
                 class: ['appearance__item'],
@@ -98,7 +99,7 @@ export default class App extends DOMHelpers {
         occupation = [],
         appearance = [],
     }) {
-        return this.getHtmlNode({
+        return createNode({
             tag: 'section',
             attributes: {
                 class: ['characters__item', 'character'],
@@ -213,7 +214,7 @@ export default class App extends DOMHelpers {
 
     renderCharacters() {
         // const wrapper = document.createDocumentFragment();
-        const wrapper = this.getHtmlNode({
+        const wrapper = createNode({
             tag: 'div',
             attributes: {
                 class: ['characters'],
@@ -227,5 +228,40 @@ export default class App extends DOMHelpers {
 
         // this.charactersRootNode.innerHTML = '';
         this.charactersRootNode.replaceWith(wrapper);
+    }
+
+    renderSelect() {
+        const selectNode = createNode({
+            attributes: {
+                class: ['select'],
+                id: ['select'],
+            },
+            children: [
+                {
+                    tag: 'button',
+                    attributes: {
+                        class: ['select__title'],
+                    },
+                    children: 'Select'
+                },
+                {
+                    tag: 'ul',
+                    attributes: {
+                        class: ['select__list'],
+                    },
+                    children: this.statuses.map((status) => ({
+                        tag: 'li',
+                        attributes: {
+                            class: ['select__option'],
+                            'data-value': status,
+                        },
+                        children: status
+                    }))
+                },
+            ],
+        });
+        const select = new Select(selectNode);
+
+        this.statusRootNode.append(selectNode);
     }
 }

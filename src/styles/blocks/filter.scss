@@ -8,7 +8,7 @@
     }
 
     &__status {
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
     &__btn-search {
@@ -19,5 +19,9 @@
         padding: 10px 15px;
         height: auto;
         align-self: flex-end;
+
+        &:hover {
+            background-color: #daab33;
+        }
     }
 }
