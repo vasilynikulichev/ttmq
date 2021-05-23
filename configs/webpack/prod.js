@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const common = require('./common');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssnanoPlugin = require('cssnano-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -15,10 +16,13 @@ module.exports = merge(common, {
     },
     optimization: {
         minimizer: [
-            new CssnanoPlugin()
+            new CssnanoPlugin(),
+            new UglifyJsPlugin()
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin({
+            filename: '[name].min.css',
+        })
     ]
 });

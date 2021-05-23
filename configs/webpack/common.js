@@ -6,7 +6,7 @@ module.exports = {
     context: paths.src,
     entry: './index.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.min.js',
         path: paths.build,
     },
     plugins: [
