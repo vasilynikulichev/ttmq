@@ -10,26 +10,10 @@
             <h1 class="management__title">What is Lorem Ipsum?</h1>
             <div class="management__graph"></div>
             <section class="management__filter filter">
-                <div class="filter__appearance appearance">
+                <div class="filter__appearance appearance" id="appearance">
                     <div class="appearance__title">Appearance:</div>
-                    <label class="appearance__item">
-                        <input type="checkbox" name="appearance" value="1">
-                        <span>Season 1</span>
-                    </label>
-                    <label class="appearance__item">
-                        <input type="checkbox" name="appearance" value="2">
-                        <span>Season 2</span>
-                    </label>
-                    <label class="appearance__item">
-                        <input type="checkbox" name="appearance" value="3">
-                        <span>Season 3</span>
-                    </label>
-                    <label class="appearance__item">
-                        <input type="checkbox" name="appearance" value="4">
-                        <span>Season 4</span>
-                    </label>
                 </div>
-                <div class="filter__status status">
+                <div class="filter__status status" id="status">
                     <div class="status__title">Status</div>
                     <select class="status__select select">
                         <option value="Alive">Alive</option>
@@ -42,35 +26,7 @@
         </div>
     </section>
     <div class="container">
-        <div class="characters">
-            <section class="characters__item character">
-                <h3 class="character__name">Walter White</h3>
-                <div class="character__img" style="background-image: url('https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_walter-white-lg.jpg');">
-                </div>
-                <ul class="character__info">
-                    <li class="character__info-item">
-                        <span>Nickname:</span>
-                        <span>Heisenberg</span>
-                    </li>
-                    <li class="character__info-item">
-                        <span>Portrayed:</span>
-                        <span>Bryan Cranston</span>
-                    </li>
-                    <li class="character__info-item">
-                        <span>Status:</span>
-                        <span>Presumed dead</span>
-                    </li>
-                    <li class="character__info-item">
-                        <span>Occupation:</span>
-                        <span>High School Chemistry Teacher, Meth King Pin</span>
-                    </li>
-                    <li class="character__info-item">
-                        <span>Appearance:</span>
-                        <span>1, 2, 3, 4, 5</span>
-                    </li>
-                </ul>
-            </section>
-        </div>
+        <div class="characters" id="characters"></div>
     </div>
 </body>
 </html>

@@ -1,11 +1,13 @@
 import './styles/main.scss';
-// import charactersApi from './api/Characters';
+import App from './app/App';
+import charactersApi from './api/Characters';
 
+(async () => {
+    const appearanceNode = document.getElementById('appearance');
+    const statusNode = document.getElementById('status');
+    const charactersNode = document.getElementById('characters');
+    const {data, status} = await charactersApi.getAllCharacters();
+    const app = new App(data, appearanceNode, statusNode, charactersNode);
 
-// const request = async () => {
-//     const result = await charactersApi.getAllCharacters();
-//
-//     console.log(result);
-// };
-//
-// request();
+    app.render();
+})();
