@@ -31,7 +31,7 @@ const createAppearanceNode = (number) => {
     });
 };
 
-const createAppearanceListNode = (appearanceList) => {
+const createAppearanceListNode = (appearanceList, filterWasChange) => {
     const appearanceListNode = document.createDocumentFragment();
     const titleNode = createNode({
         attributes: {
@@ -47,6 +47,7 @@ const createAppearanceListNode = (appearanceList) => {
 
         appearanceNode.addEventListener('change', ({target}) => {
             const {value, checked} = target;
+            filterWasChange();
 
             if (checked) {
                 appearanceListSelected.push(value);

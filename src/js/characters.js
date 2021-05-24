@@ -1,6 +1,5 @@
 import createNode from '../helpers/createNode';
 
-let characters = [];
 const charactersNode = createNode({
     attributes: {
         class: ['container']
@@ -13,6 +12,7 @@ const charactersNode = createNode({
     }],
 });
 const characterListNode = charactersNode.querySelector('#characters');
+let characters = [];
 
 const createCharacterNode = ({
     name,
@@ -151,7 +151,7 @@ const createCharacterListNode = () => {
         const isMatchCharacterAppearance = character.appearance.some((characterAppearanceNumber) => appearanceListSelected.includes(characterAppearanceNumber.toString()));
         const isMatchAppearance = character.appearance.length && isMatchCharacterAppearance;
 
-        if (isMatchStatus && isMatchAppearance) {
+        if (isMatchStatus || isMatchAppearance) {
             characterListNode.append(createCharacterNode(character));
         }
     });

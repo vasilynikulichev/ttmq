@@ -3,7 +3,7 @@ import Select from './components/Select';
 
 let statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
 
-const createStatusNode = (statusList) => {
+const createStatusNode = (statusList, filterWasChange) => {
     const statusNode = document.createDocumentFragment();
     const titleNode = createNode({
         attributes: {
@@ -44,6 +44,7 @@ const createStatusNode = (statusList) => {
     new Select(selectNode, statusSelected);
 
     selectNode.addEventListener('select', ({detail}) => {
+        filterWasChange();
         localStorage.setItem('statusSelected', JSON.stringify(detail));
     });
 

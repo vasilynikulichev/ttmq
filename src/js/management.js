@@ -3,6 +3,12 @@ import createAppearanceListNode from './appearances';
 import createStatusNode from './status';
 import {updateCharacterListNode} from './characters';
 
+let filterWasChanged = false;
+
+const filterWasChange = () => {
+    filterWasChanged =  true;
+};
+
 const createManagementNode = ({quantityPeoplePerSeason, appearanceList, statusList}) => {
     const managementNode = createNode({
         tag: 'section',
@@ -54,10 +60,15 @@ const createManagementNode = ({quantityPeoplePerSeason, appearanceList, statusLi
     const statusRootNode = managementNode.querySelector('#status');
     const btnSearch = managementNode.querySelector('#btn-search');
 
-    appearanceRootNode.append(createAppearanceListNode(appearanceList));
-    statusRootNode.append(createStatusNode(statusList));
+    appearanceRootNode.append(createAppearanceListNode(appearanceList, filterWasChange));
+    statusRootNode.append(createStatusNode(statusList, filterWasChange));
 
-    btnSearch.addEventListener('click', () => updateCharacterListNode());
+    btnSearch.addEventListener('click', () => {
+        if (filterWasChanged) {
+            filterWasChanged = false;
+            updateCharacterListNode();
+        }
+    });
 
     return managementNode;
 };
