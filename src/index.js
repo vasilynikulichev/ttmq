@@ -1,6 +1,4 @@
 import './styles/main.scss';
-import App from './js/App';
+import renderApp from './js/app';
 
-(() => {
-    new App('appearance', 'status', 'characters');
-})();
+renderApp();
