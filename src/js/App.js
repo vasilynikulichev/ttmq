@@ -22,6 +22,12 @@ export default class App {
         await this.getData();
         this.getLocalStoreData();
         this.render();
+        this.addButtonSearchEvent();
+    }
+
+    addButtonSearchEvent() {
+        const btnNode = document.getElementById('btn-search');
+        btnNode.addEventListener('click', () => this.renderCharacters());
     }
 
     async getData() {
@@ -41,7 +47,7 @@ export default class App {
 
     getLocalStoreData() {
         this.appearancesSelected = JSON.parse(localStorage.getItem('appearancesSelected')) || [];
-        this.statusSelected = JSON.parse(localStorage.getItem('statusSelected'));
+        this.statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
     }
 
     render() {
@@ -69,7 +75,7 @@ export default class App {
             value: number,
         };
 
-        if (this.appearancesSelected && this.appearancesSelected.includes(number)) {
+        if (this.appearancesSelected.includes(number)) {
             attributes.checked = true;
         }
 
@@ -239,21 +245,25 @@ export default class App {
     }
 
     renderCharacters() {
-        // const wrapper = document.createDocumentFragment();
-        const wrapper = createNode({
-            tag: 'div',
-            attributes: {
-                class: ['characters'],
-                id: 'characters',
-            },
-        });
+        const wrapper = document.createDocumentFragment();
 
         this.characters.forEach((character) => {
-            wrapper.append(this.createNodeCharacter(character));
+            if (!Object.keys(this.statusSelected).length && !this.appearancesSelected.length) {
+                wrapper.append(this.createNodeCharacter(character));
+                return;
+            }
+
+            const isMatchStatus = character.status === this.statusSelected.value;
+            const isMatchCharacterAppearance = character.appearance.some((characterAppearanceNumber) => this.appearancesSelected.includes(characterAppearanceNumber.toString()));
+            const isMatchAppearance = character.appearance.length && isMatchCharacterAppearance;
+
+            if (isMatchStatus || isMatchAppearance) {
+                wrapper.append(this.createNodeCharacter(character));
+            }
         });
 
-        // this.charactersRootNode.innerHTML = '';
-        this.charactersRootNode.replaceWith(wrapper);
+        this.charactersRootNode.innerHTML = '';
+        this.charactersRootNode.append(wrapper);
     }
 
     renderSelect() {
@@ -290,6 +300,7 @@ export default class App {
         new Select(selectNode, this.statusSelected);
 
         selectNode.addEventListener('select', ({detail}) => {
+            this.statusSelected = detail;
             localStorage.setItem('statusSelected', JSON.stringify(detail));
         });
 

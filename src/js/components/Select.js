@@ -1,7 +1,7 @@
 export default class Select {
     isOpen = false;
 
-    constructor(selectNode, detail = null) {
+    constructor(selectNode, detail = {}) {
         this.selectNode = selectNode;
         this.detail = detail;
 
@@ -9,10 +9,11 @@ export default class Select {
     }
 
     init() {
-        if (this.detail) {
+        if (this.detail && Object.keys(this.detail).length) {
             const {title, value} = this.detail;
             this.setValue(title, value);
         }
+
         this.selectNode.addEventListener('click', ({target}) => {
             if (target.className === 'select__title') {
                 this.toggle();
