@@ -1,13 +1,18 @@
 export default class Select {
     isOpen = false;
 
-    constructor(selectNode) {
+    constructor(selectNode, detail = null) {
         this.selectNode = selectNode;
+        this.detail = detail;
 
         this.init();
     }
 
     init() {
+        if (this.detail) {
+            const {title, value} = this.detail;
+            this.setValue(title, value);
+        }
         this.selectNode.addEventListener('click', ({target}) => {
             if (target.className === 'select__title') {
                 this.toggle();
@@ -46,8 +51,8 @@ export default class Select {
         const customEvent = new CustomEvent('select', {
             bubbles: true,
             detail: {
-                title: title,
-                value: value
+                title,
+                value
             }
         });
 

@@ -1,20 +1,33 @@
 import createNode from '../utils/createNode';
 import Select from './components/Select';
+import charactersApi from '../api/Characters';
 
 export default class App {
     characters = [];
     statuses = [];
+    statusSelected = {};
     appearances = [];
+    appearancesSelected = [];
     quantityPeoplePerSeason = {};
 
-    constructor(data, appearanceRootNode, statusRootNode, charactersRootNode) {
-        this.characters = data;
-        this.appearanceRootNode = appearanceRootNode;
-        this.statusRootNode = statusRootNode;
-        this.charactersRootNode = charactersRootNode;
+    constructor(appearanceId, statusId, charactersId) {
+        this.appearanceRootNode = document.getElementById(appearanceId);
+        this.statusRootNode = document.getElementById(statusId);
+        this.charactersRootNode = document.getElementById(charactersId);
+
+        this.init();
     }
 
-    getData() {
+    async init() {
+        await this.getData();
+        this.getLocalStoreData();
+        this.render();
+    }
+
+    async getData() {
+        const {data} = await charactersApi.getAllCharacters();
+        this.characters = data;
+
         this.characters.forEach(({status, appearance}) => {
             if (!this.statuses.includes(status)) {
                 this.statuses.push(status);
@@ -24,6 +37,17 @@ export default class App {
         });
 
         this.countAppearances();
+    }
+
+    getLocalStoreData() {
+        this.appearancesSelected = JSON.parse(localStorage.getItem('appearancesSelected')) || [];
+        this.statusSelected = JSON.parse(localStorage.getItem('statusSelected'));
+    }
+
+    render() {
+        this.renderAppearance();
+        this.renderCharacters();
+        this.renderSelect();
     }
 
     countQuantityPeoplePerSeason(appearance = []) {
@@ -38,14 +62,17 @@ export default class App {
         this.appearances = Object.keys(this.quantityPeoplePerSeason);
     }
 
-    render() {
-        this.getData();
-        this.renderAppearance();
-        this.renderCharacters();
-        this.renderSelect();
-    }
-
     createNodeAppearance(number) {
+        const attributes = {
+            type: 'checkbox',
+            name: 'appearance',
+            value: number,
+        };
+
+        if (this.appearancesSelected && this.appearancesSelected.includes(number)) {
+            attributes.checked = true;
+        }
+
         return createNode({
             tag: 'label',
             attributes: {
@@ -54,11 +81,7 @@ export default class App {
             children: [
                 {
                     tag: 'input',
-                    attributes: {
-                        type: 'checkbox',
-                        name: 'appearance',
-                        value: number,
-                    },
+                    attributes
                 },
                 {
                     tag: 'span',
@@ -74,13 +97,16 @@ export default class App {
         this.appearances.forEach((appearance) => {
             const appearanceNode = this.createNodeAppearance(appearance);
 
-            appearanceNode.addEventListener('change', function(event) {
-                const value = event.target.value;
+            appearanceNode.addEventListener('change', ({target}) => {
+                const {value, checked} = target;
 
-                if (this.checked) {
-                    console.log("Checkbox is checked..", value);
+                if (checked) {
+                    this.appearancesSelected.push(value);
+                    localStorage.setItem('appearancesSelected', JSON.stringify(this.appearancesSelected));
                 } else {
-                    console.log("Checkbox is not checked..", value);
+                    const index = this.appearancesSelected.indexOf(value);
+                    this.appearancesSelected.splice(index, 1);
+                    localStorage.setItem('appearancesSelected', JSON.stringify(this.appearancesSelected));
                 }
             });
 
@@ -260,7 +286,12 @@ export default class App {
                 },
             ],
         });
-        const select = new Select(selectNode);
+
+        new Select(selectNode, this.statusSelected);
+
+        selectNode.addEventListener('select', ({detail}) => {
+            localStorage.setItem('statusSelected', JSON.stringify(detail));
+        });
 
         this.statusRootNode.append(selectNode);
     }
