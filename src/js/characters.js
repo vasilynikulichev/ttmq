@@ -13,16 +13,22 @@ const charactersNode = createNode({
 });
 const characterListNode = charactersNode.querySelector('#characters');
 let characters = [];
+let charactersLength;
+let charactersWasRendered = 0;
+let characterWasUsedIndex = 0;
+let characterRenderStep = 1;
+let showElementsByStep = 10;
 
-const createCharacterNode = ({
-    name,
-    img,
-    nickname,
-    portrayed,
-    status,
-    occupation = [],
-    appearance = [],
-}) => {
+const createCharacterNode = (character) => {
+    const {
+        name,
+        img,
+        nickname,
+        portrayed,
+        status,
+        occupation = [],
+        appearance = [],
+    } = character;
     return createNode({
         tag: 'section',
         attributes: {
@@ -136,15 +142,39 @@ const createCharacterNode = ({
     });
 };
 
+const elementsShowInStart = () => {
+    const clientWidth = document.documentElement.clientWidth;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (clientHeight > 1200) {
+        showElementsByStep = 15;
+    }
+
+    if (clientWidth <= 1024) {
+        showElementsByStep = 8;
+    }
+
+    if (clientWidth <= 768) {
+        showElementsByStep = 6;
+    }
+
+    if (clientWidth <= 570) {
+        showElementsByStep = 3;
+    }
+};
+
 const createCharacterListNode = () => {
     const appearanceListSelected = JSON.parse(localStorage.getItem('appearanceListSelected')) || [];
     const statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
     const characterListNode = document.createDocumentFragment();
 
-    characters.forEach((character) => {
+    for (characterWasUsedIndex; characterWasUsedIndex < charactersLength && charactersWasRendered < showElementsByStep * characterRenderStep; characterWasUsedIndex++) {
+        const character = characters[characterWasUsedIndex];
+
         if (!Object.keys(statusSelected).length && !appearanceListSelected.length) {
             characterListNode.append(createCharacterNode(character));
-            return;
+            charactersWasRendered++;
+            continue;
         }
 
         const isMatchStatus = character.status === statusSelected.value;
@@ -153,25 +183,53 @@ const createCharacterListNode = () => {
 
         if (isMatchStatus || isMatchAppearance) {
             characterListNode.append(createCharacterNode(character));
+            charactersWasRendered++;
         }
-    });
+    }
+
+    characterRenderStep++;
 
     return characterListNode;
 };
 
-const createCharactersNode = (data) => {
+const createInitialCharactersNode = (data) => {
     characters = data;
+    charactersLength = characters.length;
+    elementsShowInStart();
     characterListNode.append(createCharacterListNode());
 
     return charactersNode;
 };
 
 const updateCharacterListNode = () => {
+    charactersWasRendered = 0;
+    characterWasUsedIndex = 0;
+    characterRenderStep = 1;
     characterListNode.innerHTML = '';
     characterListNode.append(createCharacterListNode());
 };
 
+const addScrollEventForRenderCharacters = () => {
+    const characterNode = characterListNode.querySelector('.character');
+    const characterNodeHeight = characterNode.getBoundingClientRect().height;
+    const {height: charactersBlockHeight, top: charactersBlockOffsetTop} = characterListNode.getBoundingClientRect();
+    const clientHeight = document.documentElement.clientHeight;
+
+    document.addEventListener('scroll', (event) => {
+        if (characterWasUsedIndex === charactersLength) {
+            return;
+        }
+
+        const scrollTop = event.target.documentElement.scrollTop;
+
+        if (charactersBlockHeight + charactersBlockOffsetTop - characterNodeHeight * 2 < scrollTop + clientHeight) {
+            characterListNode.append(createCharacterListNode());
+        }
+    });
+};
+
 export {
-    createCharactersNode,
+    addScrollEventForRenderCharacters,
+    createInitialCharactersNode,
     updateCharacterListNode
 };

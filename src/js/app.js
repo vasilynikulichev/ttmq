@@ -1,6 +1,6 @@
 import charactersApi from '../api/Characters';
 import createManagementNode from './management';
-import {createCharactersNode} from './characters';
+import {addScrollEventForRenderCharacters, createInitialCharactersNode} from './characters';
 
 const getData = async () => {
     const {data} = await charactersApi.getAllCharacters();
@@ -31,10 +31,11 @@ const getData = async () => {
 const renderApp = async () => {
     const {characters, charactersPerSeasons, appearanceList, statusList} = await getData();
     const appNode = document.getElementById('app');
-    const managementNode = createManagementNode({charactersPerSeasons, appearanceList, statusList});
 
-    appNode.append(managementNode);
-    appNode.append(createCharactersNode(characters));
+    appNode.append(createManagementNode({charactersPerSeasons, appearanceList, statusList}));
+    appNode.append(createInitialCharactersNode(characters));
+
+    addScrollEventForRenderCharacters();
 };
 
 export default renderApp;
