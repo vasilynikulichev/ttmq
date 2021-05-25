@@ -32,15 +32,18 @@ const createAppearanceNode = (number) => {
 };
 
 const createAppearanceListNode = (appearanceList, filterWasChange) => {
-    const appearanceListNode = document.createDocumentFragment();
+    const appearanceListNodeWrapper = document.createDocumentFragment();
     const titleNode = createNode({
         attributes: {
             class: ['appearance__title']
         },
         children: 'Appearance:'
     });
-
-    appearanceListNode.append(titleNode);
+    const appearanceListNode = createNode({
+        attributes: {
+            class: ['appearance__list']
+        },
+    });
 
     appearanceList.forEach((appearance) => {
         const appearanceNode = createAppearanceNode(appearance);
@@ -62,7 +65,10 @@ const createAppearanceListNode = (appearanceList, filterWasChange) => {
         appearanceListNode.append(appearanceNode);
     });
 
-    return appearanceListNode;
+    appearanceListNodeWrapper.append(titleNode);
+    appearanceListNodeWrapper.append(appearanceListNode);
+
+    return appearanceListNodeWrapper;
 };
 
 export default createAppearanceListNode;

@@ -4,11 +4,26 @@
 
     &__appearance {
         width: 100%;
-        margin-bottom: 30px;
+
+        @media (max-width: 1024px) {
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            margin-right: 20px;
+        }
     }
 
     &__status {
         margin-right: 20px;
+
+        @media (max-width: 1024px) {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            margin-right: 20px;
+        }
     }
 
     &__btn-search {
@@ -19,6 +34,10 @@
         padding: 10px 15px;
         height: auto;
         align-self: flex-end;
+
+        @media (max-width: 1024px) {
+            margin-bottom: 20px;
+        }
 
         &:hover {
             background-color: #daab33;
