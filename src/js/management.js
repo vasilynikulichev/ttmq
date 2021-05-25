@@ -9,7 +9,7 @@ const filterWasChange = () => {
     filterWasChanged =  true;
 };
 
-const createManagementNode = ({quantityPeoplePerSeason, appearanceList, statusList}) => {
+const createManagementNode = ({appearanceList, statusList}) => {
     const managementNode = createNode({
         tag: 'section',
         attributes: {
@@ -27,8 +27,15 @@ const createManagementNode = ({quantityPeoplePerSeason, appearanceList, statusLi
                 children: 'What is Lorem Ipsum?'
             }, {
                 attributes: {
-                    class: ['management__graph'],
+                    class: ['management__graph', 'chart'],
+                    id: 'chart'
                 },
+                children: [{
+                    tag: 'canvas',
+                    attributes: {
+                        class: ['chart__canvas']
+                    }
+                }]
             }, {
                 tag: 'section',
                 attributes: {

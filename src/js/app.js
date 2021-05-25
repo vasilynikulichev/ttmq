@@ -5,34 +5,35 @@ import {createCharactersNode} from './characters';
 const getData = async () => {
     const {data} = await charactersApi.getAllCharacters();
     const statusList = [];
-    let quantityPeoplePerSeason = {};
+    let charactersPerSeasons = {};
 
     data.forEach(({status, appearance}) => {
         if (!statusList.includes(status)) {
             statusList.push(status);
         }
 
-        quantityPeoplePerSeason = appearance.reduce((acc, cur) => {
+        charactersPerSeasons = appearance.reduce((acc, cur) => {
             acc[cur] = acc[cur] ? acc[cur] + 1 : 1;
 
             return acc;
-        }, quantityPeoplePerSeason);
+        }, charactersPerSeasons);
     });
 
     return {
         characters: data,
-        quantityPeoplePerSeason,
-        appearanceList: Object.keys(quantityPeoplePerSeason),
+        charactersPerSeasons,
+        appearanceList: Object.keys(charactersPerSeasons),
         statusList,
     };
 };
 
 
 const renderApp = async () => {
-    const {characters, quantityPeoplePerSeason, appearanceList, statusList} = await getData();
+    const {characters, charactersPerSeasons, appearanceList, statusList} = await getData();
     const appNode = document.getElementById('app');
+    const managementNode = createManagementNode({charactersPerSeasons, appearanceList, statusList});
 
-    appNode.append(createManagementNode({quantityPeoplePerSeason, appearanceList, statusList}));
+    appNode.append(managementNode);
     appNode.append(createCharactersNode(characters));
 };
 

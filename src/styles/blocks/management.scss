@@ -3,6 +3,7 @@
 
     .container {
         display: flex;
+        align-items: start;
         flex-wrap: wrap;
         width: 100%;
         padding: 15px;
@@ -17,9 +18,10 @@
 
     &__graph {
         width: 40%;
+        margin-right: 3%;
     }
 
     &__filter {
-        width: 60%;
+        width: 57%;
     }
 }
