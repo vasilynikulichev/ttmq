@@ -92,32 +92,59 @@ export default class Chart {
     }
 
     renderGraph() {
+        const lineWidth = 3;
+
         this.ctx.strokeStyle = '#d0dff2';
-        this.ctx.lineWidth = 2;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.getXPixel(0), this.getYPixel(this.data[0]));
+        this.ctx.lineWidth = lineWidth;
 
         for (let i = 1; i < this.dataLength; i ++) {
-            const x1 = this.getXPixel(i - 1);
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.getXPixel(i - 1), this.getYPixel(this.data[i - 1]));
+
+            const x1 = Math.floor(this.getXPixel(i - 1));
             const y1 = this.getYPixel(this.data[i - 1]);
-            const x2 = this.getXPixel(i);
+            const x2 = Math.floor(this.getXPixel(i));
             const y2 = this.getYPixel(this.data[i]);
-            const k1 = 30;
+            const k = 30;
+            const minYPixel = this.getYPixel(this.minY);
+            const secondArg = {x: x2, y: y2};
 
             if (this.data[i - 1] > this.data[i]) {
-                this.ctx.bezierCurveTo(x1 + k1, y1, x2 - k1, y2, x2, y2);
-                continue;
+                this.ctx.bezierCurveTo(x1 + k, y1, x2 - k, y2, x2, y2);
+                secondArg.k = k;
+            } else if (this.data[i - 1] < this.data[i]) {
+                this.ctx.bezierCurveTo(x1 + k, y1, x2 - k, y2, x2, y2);
+                secondArg.k = k;
+            } else {
+                this.ctx.lineTo(x2, y2);
             }
 
-            if (this.data[i - 1] < this.data[i]) {
-                this.ctx.bezierCurveTo(x1 + k1, y1, x2 - k1, y2, x2, y2);
-                continue;
+            this.ctx.stroke();
+
+            this.addFill(
+                lineWidth,
+                {x: x1, y: y1},
+                secondArg,
+                {x: x2, y: minYPixel},
+                {x: x1, y: minYPixel}
+            );
+        }
+    }
+
+    addFill(lineWidth, ...args) {
+        this.ctx.fillStyle = 'rgba(130, 175, 230, 0.8)';
+        this.ctx.beginPath();
+        this.ctx.moveTo(args[0].x, args[0].y + lineWidth / 2);
+
+        for (let i = 1; i < args.length; i++) {
+            if (args[i].k !== undefined) {
+                this.ctx.bezierCurveTo(args[i - 1].x + args[i].k, args[i - 1].y, args[i].x - args[i].k, args[i].y, args[i].x, args[i].y + lineWidth / 2);
             }
 
-            this.ctx.lineTo(x2, y2);
+            this.ctx.lineTo(args[i].x, args[i].y + lineWidth / 2);
         }
 
-        this.ctx.stroke();
+        this.ctx.fill();
     }
 
     renderDots() {
