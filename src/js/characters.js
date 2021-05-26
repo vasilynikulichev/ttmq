@@ -143,24 +143,9 @@ const createCharacterNode = (character) => {
 };
 
 const elementsShowInStart = () => {
-    const clientWidth = document.documentElement.clientWidth;
     const clientHeight = document.documentElement.clientHeight;
 
-    if (clientHeight > 1200) {
-        showElementsByStep = 15;
-    }
-
-    if (clientWidth <= 1024) {
-        showElementsByStep = 8;
-    }
-
-    if (clientWidth <= 768) {
-        showElementsByStep = 6;
-    }
-
-    if (clientWidth <= 570) {
-        showElementsByStep = 3;
-    }
+    showElementsByStep = (clientHeight / 400) * 5;
 };
 
 const createCharacterListNode = () => {
@@ -181,7 +166,9 @@ const createCharacterListNode = () => {
         const isMatchCharacterAppearance = character.appearance.some((characterAppearanceNumber) => appearanceListSelected.includes(characterAppearanceNumber.toString()));
         const isMatchAppearance = character.appearance.length && isMatchCharacterAppearance;
 
-        if (isMatchStatus || isMatchAppearance) {
+        if ((isMatchStatus && isMatchAppearance)
+            || isMatchAppearance && !Object.keys(statusSelected).length
+            || isMatchStatus && !appearanceListSelected.length) {
             characterListNode.append(createCharacterNode(character));
             charactersWasRendered++;
         }
@@ -214,17 +201,24 @@ const addScrollEventForRenderCharacters = () => {
     const characterNodeHeight = characterNode.getBoundingClientRect().height;
     const {height: charactersBlockHeight, top: charactersBlockOffsetTop} = characterListNode.getBoundingClientRect();
     const clientHeight = document.documentElement.clientHeight;
+    let debounceTimer;
 
-    document.addEventListener('scroll', (event) => {
+    document.addEventListener('scroll', () => {
         if (characterWasUsedIndex === charactersLength) {
             return;
         }
 
-        const scrollTop = event.target.documentElement.scrollTop;
-
-        if (charactersBlockHeight + charactersBlockOffsetTop - characterNodeHeight * 2 < scrollTop + clientHeight) {
-            characterListNode.append(createCharacterListNode());
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
         }
+
+        debounceTimer = setTimeout(() => {
+            const scrollTop = document.documentElement.scrollTop;
+
+            if (charactersBlockHeight + charactersBlockOffsetTop - characterNodeHeight * 3 < scrollTop + clientHeight) {
+                characterListNode.append(createCharacterListNode());
+            }
+        }, 50);
     });
 };
 
