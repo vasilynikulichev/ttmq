@@ -49,8 +49,8 @@ const createStatusNode = (statusList, filterWasChange) => {
     });
 
 
-    statusNode.append(titleNode);
-    statusNode.append(selectNode);
+    statusNode.appendChild(titleNode);
+    statusNode.appendChild(selectNode);
 
     return statusNode;
 };

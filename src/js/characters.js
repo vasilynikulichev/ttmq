@@ -157,7 +157,7 @@ const createCharacterListNode = () => {
         const character = characters[characterWasUsedIndex];
 
         if (!Object.keys(statusSelected).length && !appearanceListSelected.length) {
-            characterListNode.append(createCharacterNode(character));
+            characterListNode.appendChild(createCharacterNode(character));
             charactersWasRendered++;
             continue;
         }
@@ -169,7 +169,7 @@ const createCharacterListNode = () => {
         if ((isMatchStatus && isMatchAppearance)
             || isMatchAppearance && !Object.keys(statusSelected).length
             || isMatchStatus && !appearanceListSelected.length) {
-            characterListNode.append(createCharacterNode(character));
+            characterListNode.appendChild(createCharacterNode(character));
             charactersWasRendered++;
         }
     }
@@ -183,7 +183,7 @@ const createInitialCharactersNode = (data) => {
     characters = data;
     charactersLength = characters.length;
     elementsShowInStart();
-    characterListNode.append(createCharacterListNode());
+    characterListNode.appendChild(createCharacterListNode());
 
     return charactersNode;
 };
@@ -193,7 +193,7 @@ const updateCharacterListNode = () => {
     characterWasUsedIndex = 0;
     characterRenderStep = 1;
     characterListNode.innerHTML = '';
-    characterListNode.append(createCharacterListNode());
+    characterListNode.appendChild(createCharacterListNode());
 };
 
 const addScrollEventForRenderCharacters = () => {
@@ -216,7 +216,7 @@ const addScrollEventForRenderCharacters = () => {
             const scrollTop = document.documentElement.scrollTop;
 
             if (charactersBlockHeight + charactersBlockOffsetTop - characterNodeHeight * 3 < scrollTop + clientHeight) {
-                characterListNode.append(createCharacterListNode());
+                characterListNode.appendChild(createCharacterListNode());
             }
         }, 50);
     });

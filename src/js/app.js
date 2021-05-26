@@ -33,8 +33,8 @@ const renderApp = async () => {
     const {characters, charactersPerSeasons, appearanceList, statusList} = await getData();
     const appNode = document.getElementById('app');
 
-    appNode.append(createManagementNode({appearanceList, statusList}));
-    appNode.append(createInitialCharactersNode(characters));
+    appNode.appendChild(createManagementNode({appearanceList, statusList}));
+    appNode.appendChild(createInitialCharactersNode(characters));
 
     addScrollEventForRenderCharacters();
 

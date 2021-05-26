@@ -30,7 +30,7 @@ export default class Chart {
                 height: this.height,
             }
         });
-        chartNode.append(canvasNode);
+        chartNode.appendChild(canvasNode);
 
         this.ctx = canvasNode.getContext('2d');
         this.dataLength = this.data.length;

@@ -62,11 +62,11 @@ const createAppearanceListNode = (appearanceList, filterWasChange) => {
             }
         });
 
-        appearanceListNode.append(appearanceNode);
-    };
+        appearanceListNode.appendChild(appearanceNode);
+    }
 
-    appearanceListNodeWrapper.append(titleNode);
-    appearanceListNodeWrapper.append(appearanceListNode);
+    appearanceListNodeWrapper.appendChild(titleNode);
+    appearanceListNodeWrapper.appendChild(appearanceListNode);
 
     return appearanceListNodeWrapper;
 };

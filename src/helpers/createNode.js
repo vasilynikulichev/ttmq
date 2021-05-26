@@ -14,13 +14,12 @@ const createNode = ({tag = 'div', attributes = {}, children = ''}) => {
     }
 
     if (typeof children === 'string') {
-        const textNode = document.createTextNode(children);
-        node.appendChild(textNode)
+        node.innerHTML = children;
         return node;
     }
 
     for (let i = 0; i < children.length; i++) {
-        node.append(createNode(children[i]));
+        node.appendChild(createNode(children[i]));
     }
 
     return node;
