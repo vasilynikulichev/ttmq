@@ -11,8 +11,8 @@ export default class Chart {
     minY;
     dataLength;
 
-    constructor(charactersPerSeasons) {
-        this.data = Object.values(charactersPerSeasons);
+    constructor(data) {
+        this.data = data;
         this.init();
         this.render();
     }
@@ -64,7 +64,7 @@ export default class Chart {
         this.ctx.textAlign = 'right';
         this.ctx.textBaseline = 'middle';
 
-        for(let i = this.minY; i < this.maxY; i += 10) {
+        for (let i = this.minY; i < this.maxY; i += 10) {
             this.ctx.fillText(i, this.paddingLeft - 10, this.getYPixel(i));
         }
     }
@@ -73,7 +73,7 @@ export default class Chart {
         this.ctx.fillStyle = '#fff';
         this.ctx.font = this.ctx.font.replace(/\d+px/, '14px');
 
-        for(let i = 0; i < this.dataLength; i ++) {
+        for (let i = 0; i < this.dataLength; i ++) {
             this.ctx.fillText(i + 1, this.getXPixel(i), this.height - this.paddingBottom + 20);
         }
     }
@@ -83,7 +83,7 @@ export default class Chart {
         this.ctx.lineWidth = 2;
         this.ctx.beginPath();
 
-        for(let i = this.minY; i < this.maxY; i += 10) {
+        for (let i = this.minY; i < this.maxY; i += 10) {
             this.ctx.moveTo(this.getXPixel(0), this.getYPixel(i));
             this.ctx.lineTo(this.width - this.paddingRight, this.getYPixel(i));
         }
@@ -148,7 +148,7 @@ export default class Chart {
     }
 
     renderDots() {
-        for(let i = 0; i < this.dataLength; i ++) {
+        for (let i = 0; i < this.dataLength; i ++) {
             this.ctx.fillStyle = '#f7f9fc';
             this.ctx.beginPath();
             this.ctx.arc(this.getXPixel(i), this.getYPixel(this.data[i]), 5, 0, Math.PI * 2, true);

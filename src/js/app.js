@@ -22,7 +22,7 @@ const getData = async () => {
 
     return {
         characters: data,
-        charactersPerSeasons,
+        charactersPerSeasons: Object.values(charactersPerSeasons),
         appearanceList: Object.keys(charactersPerSeasons),
         statusList,
     };
