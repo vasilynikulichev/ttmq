@@ -3,12 +3,14 @@ const createNode = ({tag = 'div', attributes = {}, children = ''}) => {
     const attrKeysArr = Object.keys(attributes);
 
     if (attrKeysArr.length) {
-        attrKeysArr.forEach((attrKey) => {
+        for (let i = 0; i < attrKeysArr.length; i++) {
+            const attrKey = attrKeysArr[i];
             let attrValue = attributes[attrKey];
+
             attrValue = !Array.isArray(attrValue) ? attrValue : attrValue.join(' ');
 
-            return node.setAttribute(attrKey, attrValue);
-        })
+            node.setAttribute(attrKey, attrValue);
+        }
     }
 
     if (typeof children === 'string') {
@@ -17,9 +19,9 @@ const createNode = ({tag = 'div', attributes = {}, children = ''}) => {
         return node;
     }
 
-    children.forEach((childNode) => {
-        node.append(createNode(childNode));
-    });
+    for (let i = 0; i < children.length; i++) {
+        node.append(createNode(children[i]));
+    }
 
     return node;
 };

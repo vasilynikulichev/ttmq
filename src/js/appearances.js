@@ -45,8 +45,8 @@ const createAppearanceListNode = (appearanceList, filterWasChange) => {
         },
     });
 
-    appearanceList.forEach((appearance) => {
-        const appearanceNode = createAppearanceNode(appearance);
+    for (let i = 0; i < appearanceList.length; i++) {
+        const appearanceNode = createAppearanceNode(appearanceList[i]);
 
         appearanceNode.addEventListener('change', ({target}) => {
             const {value, checked} = target;
@@ -63,7 +63,7 @@ const createAppearanceListNode = (appearanceList, filterWasChange) => {
         });
 
         appearanceListNode.append(appearanceNode);
-    });
+    };
 
     appearanceListNodeWrapper.append(titleNode);
     appearanceListNodeWrapper.append(appearanceListNode);
