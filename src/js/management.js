@@ -30,12 +30,6 @@ const createManagementNode = ({appearanceList, statusList}) => {
                     class: ['management__graph', 'chart'],
                     id: 'chart'
                 },
-                children: [{
-                    tag: 'canvas',
-                    attributes: {
-                        class: ['chart__canvas']
-                    }
-                }]
             }, {
                 tag: 'section',
                 attributes: {
@@ -67,8 +61,8 @@ const createManagementNode = ({appearanceList, statusList}) => {
     const statusRootNode = managementNode.querySelector('#status');
     const btnSearch = managementNode.querySelector('#btn-search');
 
-    appearanceRootNode.append(createAppearanceListNode(appearanceList, filterWasChange));
-    statusRootNode.append(createStatusNode(statusList, filterWasChange));
+    // appearanceRootNode.append(createAppearanceListNode(appearanceList, filterWasChange));
+    // statusRootNode.append(createStatusNode(statusList, filterWasChange));
 
     btnSearch.addEventListener('click', () => {
         if (filterWasChanged) {
