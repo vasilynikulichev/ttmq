@@ -27,7 +27,7 @@ const createManagementNode = ({appearanceList, statusList}) => {
                 children: 'What is Lorem Ipsum?'
             }, {
                 attributes: {
-                    class: ['management__graph', 'chart'],
+                    class: ['management__chart'],
                     id: 'chart'
                 },
             }, {

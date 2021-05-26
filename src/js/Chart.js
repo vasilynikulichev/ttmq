@@ -26,7 +26,6 @@ export default class Chart {
         const canvasNode = createNode({
             tag: 'canvas',
             attributes: {
-                class: ['chart__canvas'],
                 width: this.width,
                 height: this.height,
             }
@@ -98,8 +97,24 @@ export default class Chart {
         this.ctx.beginPath();
         this.ctx.moveTo(this.getXPixel(0), this.getYPixel(this.data[0]));
 
-        for(let i = 0; i < this.dataLength; i ++) {
-            this.ctx.lineTo(this.getXPixel(i), this.getYPixel(this.data[i]));
+        for (let i = 1; i < this.dataLength; i ++) {
+            const x1 = this.getXPixel(i - 1);
+            const y1 = this.getYPixel(this.data[i - 1]);
+            const x2 = this.getXPixel(i);
+            const y2 = this.getYPixel(this.data[i]);
+            const k1 = 30;
+
+            if (this.data[i - 1] > this.data[i]) {
+                this.ctx.bezierCurveTo(x1 + k1, y1, x2 - k1, y2, x2, y2);
+                continue;
+            }
+
+            if (this.data[i - 1] < this.data[i]) {
+                this.ctx.bezierCurveTo(x1 + k1, y1, x2 - k1, y2, x2, y2);
+                continue;
+            }
+
+            this.ctx.lineTo(x2, y2);
         }
 
         this.ctx.stroke();
