@@ -1,6 +1,7 @@
 .filter {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
 
     &__appearance {
         width: 100%;

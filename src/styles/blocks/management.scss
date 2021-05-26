@@ -1,13 +1,12 @@
 .management {
-    //background-color: #4a76b8;
+    background-color: #4a76b8;
 
     .container {
         display: flex;
-        align-items: flex-start;
+        align-content: flex-start;
         flex-wrap: wrap;
         width: 100%;
         padding: 15px;
-        height: 200px;
     }
 
     &__title {
@@ -18,7 +17,7 @@
     }
 
     &__graph {
-        height: 100%;
+        height: 300px;
         width: 40%;
         margin-right: 3%;
 
