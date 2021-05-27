@@ -26,6 +26,8 @@
     "core-js": "^3.13.0",
     "css-loader": "^5.2.5",
     "cssnano-webpack-plugin": "^1.0.3",
+    "custom-event-polyfill": "^1.0.7",
+    "es6-promise": "^4.2.8",
     "gh-pages": "^3.2.0",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.6.0",
@@ -38,7 +40,8 @@
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.7.3",
+    "whatwg-fetch": "^3.6.2"
   },
   "postcss": {
     "plugins": {
