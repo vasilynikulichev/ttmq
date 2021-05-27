@@ -17,7 +17,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: [['@babel/preset-env', {
+                            corejs : {
+                                version : "3",
+                                proposals : true
+                            },
+                            useBuiltIns: 'usage',
+                            targets: {
+                                browsers: [
+                                    "last 2 version",
+                                    "ie >= 11"
+                                ]
+                            }
+                        }]]
                     }
                 }
             }
