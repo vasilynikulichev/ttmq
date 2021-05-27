@@ -11,10 +11,15 @@ export default class Characters {
     characterRenderStep = 1;
     charactersFitOnDisplay = 5;
 
-    init(rootNode, data) {
+    constructor(rootNode, data) {
         this.rootNode = rootNode;
         this.characters = data;
         this.charactersLength = data.length;
+
+        this.init();
+    }
+
+    init() {
         this.createCharactersBlockNode();
         this.getCharacterListNode();
         this.countCharactersFitOnDisplay();
