@@ -5,7 +5,7 @@ class CharactersApi extends Request{
     entryPoint = `${baseUrl}/characters`;
 
     async getAllCharacters() {
-        return await this.request('get', this.entryPoint);
+        return await this.request(this.entryPoint);
     }
 }
 

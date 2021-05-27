@@ -186,7 +186,7 @@ class Characters {
             const isMatchStatus = status === this.statusSelected.value;
             const isMatchAppearance = appearance.length && appearance.some((characterAppearanceNumber) => this.appearanceListSelected.includes(characterAppearanceNumber.toString()));
 
-            const isMatchStatusAndAppearance = isMatchStatus || isMatchAppearance;
+            const isMatchStatusAndAppearance = isMatchStatus && isMatchAppearance;
             const isMatchOnlyStatus = isMatchStatus && !hasSelectedAppearance;
             const isMatchOnlyAppearance = isMatchAppearance && !hasSelectedStatus;
             const isMatchSomeFilter = isMatchStatusAndAppearance || isMatchOnlyStatus || isMatchOnlyAppearance;

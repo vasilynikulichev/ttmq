@@ -1,27 +1,22 @@
-export default class Request {
-    request(method, url) {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.responseType = 'json';
-            xhr.open(method, url);
+import {requestSuccessStatus} from '../constants';
 
-            xhr.onload = () => {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    resolve(xhr.response);
-                } else {
-                    reject({
-                        status: xhr.status,
-                        statusText: xhr.statusText
-                    });
-                }
+export default class Request {
+    async request(url, params = {}) {
+        try {
+            const response = await fetch(url, params);
+
+            if (response.status !== requestSuccessStatus) {
+                return null;
+            }
+
+            return {
+                data: await response.json(),
+                status: response.status,
             };
-            xhr.onerror = () => {
-                reject({
-                    status: xhr.status,
-                    statusText: xhr.statusText
-                });
-            };
-            xhr.send();
-        });
+        } catch (error) {
+            console.error(error);
+
+            return null;
+        }
     }
 }

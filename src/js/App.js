@@ -21,7 +21,8 @@ export default class App {
     }
 
     async getData() {
-        this.characters = await charactersApi.getAllCharacters();
+        const {data} = await charactersApi.getAllCharacters();
+        this.characters = data;
 
         let charactersPerSeasons = {};
 
