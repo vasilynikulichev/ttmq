@@ -1,5 +1,4 @@
 const paths = require('../paths');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -29,8 +28,5 @@ module.exports = {
             template: './index.html'
         }),
         new CleanWebpackPlugin(),
-        new webpack.ProvidePlugin({
-            Promise: ['es6-promise', 'Promise']
-        })
     ]
 };
