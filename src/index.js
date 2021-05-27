@@ -1,6 +1,7 @@
 import './styles/main.scss';
-import renderApp from './js/app';
+import App from './js/App';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderApp();
+    const appNode = document.getElementById('app');
+    new App(appNode);
 });
