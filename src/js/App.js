@@ -21,12 +21,13 @@ export default class App {
     }
 
     async getData() {
-        const {data} = await charactersApi.getAllCharacters();
-        this.characters = data;
+        this.characters = await charactersApi.getAllCharacters();
 
         let charactersPerSeasons = {};
 
-        this.characters.forEach(({status, appearance}) => {
+        for (let i = 0; i < this.characters.length; i++) {
+            const {status, appearance} = this.characters[i];
+
             if (!this.statusList.includes(status)) {
                 this.statusList.push(status);
             }
@@ -36,7 +37,7 @@ export default class App {
 
                 return acc;
             }, charactersPerSeasons);
-        });
+        }
 
         this.chartData = Object.values(charactersPerSeasons);
         this.appearanceList = Object.keys(charactersPerSeasons);

@@ -4,8 +4,8 @@ import Request from './Request';
 class CharactersApi extends Request{
     entryPoint = `${baseUrl}/characters`;
 
-    getAllCharacters() {
-        return this.request(this.entryPoint);
+    async getAllCharacters() {
+        return await this.request('get', this.entryPoint);
     }
 }
 
