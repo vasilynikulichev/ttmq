@@ -1,6 +1,7 @@
 import createNode from '../helpers/createNode';
 
 export default class Chart {
+    canvasNode;
     paddingLeft = 30;
     paddingBottom = 30;
     paddingRight = 10;
@@ -11,38 +12,51 @@ export default class Chart {
     minY;
     dataLength;
 
-    constructor(data) {
+    constructor(rootNode, data) {
+        this.rootNode = rootNode;
         this.data = data;
+        this.dataLength = data.length;
+
         this.init();
-        this.render();
     }
 
     init() {
-        const chartNode = document.getElementById('chart');
-        const {height, width} = chartNode.getBoundingClientRect();
+        this.getSize();
+        this.createCanvasNode();
+        this.appendCanvas();
+        this.getCtx();
+        this.render();
+
+    }
+
+    getSize() {
+        const {height, width} = this.rootNode.getBoundingClientRect();
+
         this.height = height;
         this.width = width
+    }
 
-        const canvasNode = createNode({
+    createCanvasNode () {
+        this.canvasNode = createNode({
             tag: 'canvas',
             attributes: {
-                width: this.width,
                 height: this.height,
+                width: this.width,
             }
         });
-        chartNode.appendChild(canvasNode);
+    }
 
-        this.ctx = canvasNode.getContext('2d');
-        this.dataLength = this.data.length;
+    appendCanvas() {
+        this.rootNode.appendChild(this.canvasNode);
+    }
 
-        const maxData = Math.max(...this.data);
-        this.maxY = maxData + (10 - maxData % 10);
-
-        const minData = Math.min(...this.data);
-        this.minY = minData - (10 + minData % 5);
+    getCtx() {
+        this.ctx = this.canvasNode.getContext('2d');
     }
 
     render() {
+        this.getMinY();
+        this.getMaxY();
         this.renderLeftValues();
         this.renderBottomValues();
         this.renderHorizontalLines();
@@ -56,6 +70,16 @@ export default class Chart {
 
     getYPixel(value) {
         return this.height - (((this.height - this.paddingBottom) / (this.maxY - this.minY)) * (value - this.minY)) - this.paddingBottom;
+    }
+
+    getMinY() {
+        const minData = Math.min(...this.data);
+        this.minY = minData - (10 + minData % 5);
+    }
+
+    getMaxY() {
+        const maxData = Math.max(...this.data);
+        this.maxY = maxData + (10 - maxData % 10);
     }
 
     renderLeftValues() {

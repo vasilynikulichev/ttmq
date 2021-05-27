@@ -1,7 +1,7 @@
 import charactersApi from '../api/Characters';
-import createManagementNode from './management';
-import {addScrollEventForRenderCharacters, createInitialCharactersNode} from './characters';
+import Management from './Management';
 import Chart from './Chart';
+import {addScrollEventForRenderCharacters, createInitialCharactersNode} from './characters';
 
 export default class App {
     characters = [];
@@ -43,11 +43,12 @@ export default class App {
     }
 
     render() {
-        this.rootNode.appendChild(createManagementNode({appearanceList: this.appearanceList, statusList: this.statusList}));
+        new Management(this.rootNode, {appearanceList: this.appearanceList, statusList: this.statusList});
         this.rootNode.appendChild(createInitialCharactersNode(this.characters));
 
         addScrollEventForRenderCharacters();
 
-        new Chart(this.chartData);
+        const chartNode = document.getElementById('chart');
+        new Chart(chartNode, this.chartData);
     };
 };
