@@ -1,5 +1,5 @@
 import createNode from '../helpers/createNode';
-import Select from './components/Select';
+import Select from './Select';
 
 export default class Status {
     statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
@@ -78,59 +78,3 @@ export default class Status {
         });
     }
 };
-
-// let statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
-//
-// const createStatusNode = (statusList, filterWasChange) => {
-//     const statusNode = document.createDocumentFragment();
-//     const titleNode = createNode({
-//         attributes: {
-//             class: ['status__title']
-//         },
-//         children: 'Status:'
-//     });
-//     const selectNode = createNode({
-//         attributes: {
-//             class: ['select'],
-//             id: ['select'],
-//         },
-//         children: [
-//             {
-//                 tag: 'button',
-//                 attributes: {
-//                     class: ['select__title'],
-//                 },
-//                 children: 'Select'
-//             },
-//             {
-//                 tag: 'ul',
-//                 attributes: {
-//                     class: ['select__list'],
-//                 },
-//                 children: statusList.map((status) => ({
-//                     tag: 'li',
-//                     attributes: {
-//                         class: ['select__option'],
-//                         'data-value': status,
-//                     },
-//                     children: status
-//                 }))
-//             },
-//         ],
-//     });
-//
-//     new Select(selectNode, statusSelected);
-//
-//     selectNode.addEventListener('select', ({detail}) => {
-//         filterWasChange();
-//         localStorage.setItem('statusSelected', JSON.stringify(detail));
-//     });
-//
-//
-//     statusNode.appendChild(titleNode);
-//     statusNode.appendChild(selectNode);
-//
-//     return statusNode;
-// };
-
-// export default createStatusNode;
