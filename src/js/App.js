@@ -1,7 +1,7 @@
 import charactersApi from '../api/Characters';
 import Management from './Management';
 import Chart from './Chart';
-import Characters from './Characters';
+import charactersInstance from './Characters';
 
 export default class App {
     characters = [];
@@ -44,9 +44,9 @@ export default class App {
 
     render() {
         new Management(this.rootNode, {appearanceList: this.appearanceList, statusList: this.statusList});
-        new Characters(this.rootNode, this.characters);
+        charactersInstance.render(this.rootNode, this.characters);
 
         const chartNode = document.getElementById('chart');
         new Chart(chartNode, this.chartData);
     };
-};
+}

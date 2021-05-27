@@ -1,26 +1,21 @@
 import createNode from '../helpers/createNode';
 import Select from './Select';
+import charactersInstance from './Characters';
 
-export default class Status {
+class Status {
     statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
     titleNode;
     selectNode;
+    statusWasUpdated = false;
 
-    constructor(rootNode, statusList) {
+    render(rootNode, statusList) {
         this.rootNode = rootNode;
         this.statusList = statusList;
 
-        this.init();
-    }
-
-    init() {
         this.createTitleNode();
         this.createSelectNode();
         this.addSelectEvent();
-        this.render();
-    }
 
-    render() {
         const statusNode = document.createDocumentFragment();
 
         statusNode.appendChild(this.titleNode);
@@ -75,6 +70,12 @@ export default class Status {
 
         this.selectNode.addEventListener('select', ({detail}) => {
             localStorage.setItem('statusSelected', JSON.stringify(detail));
+            charactersInstance.updateStatusSelected(detail);
+            this.statusWasUpdated = true;
         });
     }
-};
+}
+
+const statusInstance = new Status();
+
+export default statusInstance;

@@ -1,26 +1,27 @@
 import createNode from '../helpers/createNode';
+import charactersInstance from './Characters';
 
-export default class Appearances {
+class Appearances {
     appearanceListSelected = JSON.parse(localStorage.getItem('appearanceListSelected')) || [];
     titleNode;
     appearanceListNode;
+    appearanceWasUpdated = false;
 
-    constructor(rootNode, appearanceList) {
-        this.rootNode = rootNode;
-        this.appearanceList = appearanceList;
-
+    constructor() {
         this.init();
     }
 
     init() {
         this.createTitleNode();
         this.createAppearanceListNode();
-        this.addAppearanceToList();
-        this.render();
     }
 
-    render() {
+    render(rootNode, appearanceList) {
+        this.rootNode = rootNode;
+        this.appearanceList = appearanceList;
         const appearanceNodeWrapper = document.createDocumentFragment();
+
+        this.addAppearanceToList();
 
         appearanceNodeWrapper.appendChild(this.titleNode);
         appearanceNodeWrapper.appendChild(this.appearanceListNode);
@@ -90,12 +91,18 @@ export default class Appearances {
 
             if (checked) {
                 this.appearanceListSelected.push(value);
-                localStorage.setItem('appearanceListSelected', JSON.stringify(this.appearanceListSelected));
             } else {
                 const index = this.appearanceListSelected.indexOf(value);
                 this.appearanceListSelected.splice(index, 1);
-                localStorage.setItem('appearanceListSelected', JSON.stringify(this.appearanceListSelected));
             }
+
+            localStorage.setItem('appearanceListSelected', JSON.stringify(this.appearanceListSelected));
+            charactersInstance.updateAppearanceListSelected(this.appearanceListSelected)
+            this.appearanceWasUpdated = true;
         });
     }
-};
+}
+
+const appearancesInstance = new Appearances();
+
+export default appearancesInstance;

@@ -1,6 +1,6 @@
 import createNode from '../helpers/createNode';
 
-export default class Characters {
+class Characters {
     appearanceListSelected = JSON.parse(localStorage.getItem('appearanceListSelected')) || [];
     statusSelected = JSON.parse(localStorage.getItem('statusSelected')) || {};
     charactersBlockNode;
@@ -11,11 +11,7 @@ export default class Characters {
     characterRenderStep = 1;
     charactersFitOnDisplay = 5;
 
-    constructor(rootNode, data) {
-        this.rootNode = rootNode;
-        this.characters = data;
-        this.charactersLength = data.length;
-
+    constructor() {
         this.init();
     }
 
@@ -23,15 +19,18 @@ export default class Characters {
         this.createCharactersBlockNode();
         this.getCharacterListNode();
         this.countCharactersFitOnDisplay();
-        this.addCharactersInList();
-
-        this.render();
-
-        this.addScrollEvent();
     }
 
-    render() {
+    render(rootNode, data) {
+        this.rootNode = rootNode;
+        this.characters = data;
+        this.charactersLength = data.length;
+
+        this.addCharactersInList();
+
         this.rootNode.appendChild(this.charactersBlockNode);
+
+        this.addScrollEvent();
     }
 
     createCharactersBlockNode() {
@@ -241,4 +240,16 @@ export default class Characters {
         this.characterListNode.innerHTML = '';
         this.addCharactersInList();
     }
+
+    updateStatusSelected(value) {
+        this.statusSelected = value;
+    }
+
+    updateAppearanceListSelected(value) {
+        this.appearanceListSelected = value;
+    }
 }
+
+const charactersInstance = new Characters();
+
+export default charactersInstance;

@@ -1,7 +1,7 @@
 import createNode from '../helpers/createNode';
-import Appearances from './Appearances';
-import Status from './Status';
-// import {updateCharacterListNode} from './characters';
+import appearancesInstance from './Appearances';
+import statusInstance from './Status';
+import charactersInstance from './Characters';
 
 export default class Management {
     managementNode;
@@ -79,20 +79,26 @@ export default class Management {
     renderAppearance() {
         const appearanceRootNode = this.managementNode.querySelector('#appearance');
 
-        new Appearances(appearanceRootNode, this.appearanceList);
+        appearancesInstance.render(appearanceRootNode, this.appearanceList);
     }
 
     renderStatus() {
         const statusRootNode = this.managementNode.querySelector('#status');
 
-        new Status(statusRootNode, this.statusList);
+        statusInstance.render(statusRootNode, this.statusList);
     }
 
     addBtnSearchEvent() {
         const btnSearch = this.managementNode.querySelector('#btn-search');
 
         btnSearch.addEventListener('click', () => {
-            // updateCharacterListNode();
+            if (!(statusInstance.statusWasUpdated || appearancesInstance.appearanceWasUpdated)) {
+                return;
+            }
+
+            charactersInstance.updateCharacters();
+            statusInstance.statusWasUpdated = false;
+            appearancesInstance.appearanceWasUpdated = false;
         });
     }
-};
+}
