@@ -1,7 +1,7 @@
 import createNode from '../helpers/createNode';
 import Appearances from './Appearances';
 import Status from './Status';
-import {updateCharacterListNode} from './characters';
+// import {updateCharacterListNode} from './characters';
 
 export default class Management {
     managementNode;
@@ -92,7 +92,7 @@ export default class Management {
         const btnSearch = this.managementNode.querySelector('#btn-search');
 
         btnSearch.addEventListener('click', () => {
-            updateCharacterListNode();
+            // updateCharacterListNode();
         });
     }
 };

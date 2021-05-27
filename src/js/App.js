@@ -1,7 +1,7 @@
 import charactersApi from '../api/Characters';
 import Management from './Management';
 import Chart from './Chart';
-import {addScrollEventForRenderCharacters, createInitialCharactersNode} from './characters';
+import Characters from './Characters';
 
 export default class App {
     characters = [];
@@ -44,9 +44,7 @@ export default class App {
 
     render() {
         new Management(this.rootNode, {appearanceList: this.appearanceList, statusList: this.statusList});
-        this.rootNode.appendChild(createInitialCharactersNode(this.characters));
-
-        addScrollEventForRenderCharacters();
+        new Characters(this.rootNode, this.characters);
 
         const chartNode = document.getElementById('chart');
         new Chart(chartNode, this.chartData);
